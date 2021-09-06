@@ -22,7 +22,7 @@ public class Wallet {
 
     @ManyToOne
     @JoinColumn(name = "currency_id", nullable = false)
-    private ExpanseCategory currency;
+    private Currency currency;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
     private Set<Expanse> expanses;
