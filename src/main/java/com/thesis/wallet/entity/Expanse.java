@@ -42,7 +42,7 @@ public class Expanse {
 
     @ManyToOne
     @JoinColumn(name = "wallet_id", nullable = false)
-    private ExpanseCategory wallet;
+    private Wallet wallet;
 
 
 
