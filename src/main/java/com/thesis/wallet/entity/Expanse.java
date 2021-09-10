@@ -1,5 +1,7 @@
 package com.thesis.wallet.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,10 +39,12 @@ public class Expanse {
     private String location;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "category_id", nullable = false)
     private ExpanseCategory category;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
 
