@@ -23,7 +23,6 @@ public class ExpanseCategory {
     private String expanseCategoryName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    @JsonBackReference
     private Set<Expanse> expanses;
 
 }
