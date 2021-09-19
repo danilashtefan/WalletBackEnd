@@ -38,6 +38,9 @@ public class Expanse {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "type")
+    private String type;
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private ExpanseCategory category;

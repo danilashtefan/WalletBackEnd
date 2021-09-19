@@ -22,6 +22,9 @@ public class ExpanseCategory {
     @Column(name = "expanse_category_name")
     private String expanseCategoryName;
 
+    @Column(name = "type")
+    private String type;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Expanse> expanses;
 
