@@ -49,6 +49,4 @@ public class Expanse {
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
 
-
-
 }
