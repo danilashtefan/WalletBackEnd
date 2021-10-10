@@ -38,16 +38,15 @@ public class Expanse {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "type")
+    private String type;
+
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "category_id", nullable = false)
     private ExpanseCategory category;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
-
-
 
 }

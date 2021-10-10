@@ -24,12 +24,10 @@ public class Wallet {
 
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "currency_id", nullable = false)
     private Currency currency;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
-    @JsonBackReference
     private Set<Expanse> expanses;
 
 }
