@@ -23,9 +23,8 @@ public class Wallet {
     private String walletName;
 
 
-    @ManyToOne
-    @JoinColumn(name = "currency_id", nullable = false)
-    private Currency currency;
+    @Column(name = "currency")
+    private String currency;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
     private Set<Expanse> expanses;

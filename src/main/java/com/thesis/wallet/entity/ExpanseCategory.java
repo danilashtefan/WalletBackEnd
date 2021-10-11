@@ -19,11 +19,14 @@ public class ExpanseCategory {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "expanse_category_name")
+    @Column(name = "name")
     private String expanseCategoryName;
 
     @Column(name = "type")
     private String type;
+
+    @Column(name = "icon")
+    private String icon;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Expanse> expanses;
