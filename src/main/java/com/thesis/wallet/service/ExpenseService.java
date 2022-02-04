@@ -2,6 +2,7 @@ package com.thesis.wallet.service;
 
 import com.thesis.wallet.DAO.ExpanseRepository;
 import com.thesis.wallet.entity.Expanse;
+import com.thesis.wallet.entity.security.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,9 @@ import java.util.Optional;
 public class ExpenseService {
     private final ExpanseRepository expanseRepository;
 
-   public List<Expanse> getAllExpenses(){
-        return expanseRepository.findAll();
+
+   public List<Expanse> getAllExpenses(String username){
+        return expanseRepository.findAllUserExpenses(username);
     }
 
 
