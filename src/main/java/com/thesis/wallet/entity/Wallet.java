@@ -2,6 +2,7 @@ package com.thesis.wallet.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class Wallet {
     @Column(name = "currency")
     private String currency;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
     private Set<Expanse> expanses;
 

@@ -2,6 +2,8 @@ package com.thesis.wallet.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +30,7 @@ public class ExpanseCategory {
     @Column(name = "icon")
     private String icon;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Expanse> expanses;
 

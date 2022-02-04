@@ -2,11 +2,19 @@ package com.thesis.wallet.DAO;
 
 
 import com.thesis.wallet.entity.Expanse;
-import com.thesis.wallet.entity.ExpanseCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
+import java.util.List;
+import java.util.Optional;
+
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public interface ExpanseRepository extends JpaRepository<Expanse,Long> {
-    Expanse findByName(@Param("name") String name);
+//   @Override
 
+    Page<Expanse> findAll(Pageable pageable);
+    List<Expanse> findAll();
+    Optional<Expanse> findById(Long id);
 }

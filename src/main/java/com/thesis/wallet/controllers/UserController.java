@@ -77,7 +77,7 @@ public class UserController {
 
                 User user = userService.getUser(username);
 
-                log.info("User {} makeas a refresh token API request", username);
+                log.info("User {} makes a refresh token API request", username);
 
                 String accessToken = JWT.create().withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 1000))
