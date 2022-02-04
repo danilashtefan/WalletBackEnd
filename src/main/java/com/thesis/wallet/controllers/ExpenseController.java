@@ -21,13 +21,15 @@ import java.util.Optional;
 @Slf4j
 public class ExpenseController {
     private final ExpenseService expenseService;
-@GetMapping("/expanses2")
-public ResponseEntity<List<Expanse>> getAllExpenses(){
-    return ResponseEntity.ok().body(expenseService.getAllExpenses());
-}
 
-@GetMapping("/expanses2/{id}")
- public ResponseEntity<Optional<Expanse>> getExpense(@PathVariable Long id){
-    return ResponseEntity.ok().body(expenseService.getExpense(id));
-}
+    @GetMapping("/expanses2")
+    public ResponseEntity<List<Expanse>> getAllExpenses() {
+        return ResponseEntity.ok().body(expenseService.getAllExpenses());
+    }
+
+    @GetMapping("/expanses2/{id}")
+    public ResponseEntity<Optional<Expanse>> getExpense(@PathVariable Long id) {
+        return ResponseEntity.ok().body(expenseService.getExpense(id));
+    }
+
 }
