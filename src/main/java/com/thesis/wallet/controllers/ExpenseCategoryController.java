@@ -7,6 +7,8 @@ import com.thesis.wallet.service.ExpenseCategoriesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +23,9 @@ public class ExpenseCategoryController {
     private final ExpenseCategoriesService expenseCategoryService;
 
     @GetMapping("/expanseCategories2")
-    public ResponseEntity<List<ExpanseCategory>> getAllExpenseCategories() {
-        return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories());
+    public ResponseEntity<List<ExpanseCategory>> getAllExpenseCategories(Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories(username));
     }
 
 

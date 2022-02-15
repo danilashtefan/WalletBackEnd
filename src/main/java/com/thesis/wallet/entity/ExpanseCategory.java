@@ -30,6 +30,9 @@ public class ExpanseCategory {
     @Column(name = "icon")
     private String icon;
 
+    @Column(name = "username")
+    private String username;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Expanse> expanses;

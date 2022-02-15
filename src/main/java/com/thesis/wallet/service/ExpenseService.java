@@ -23,7 +23,6 @@ public class ExpenseService {
         return expanseRepository.findAllUserExpenses(username);
     }
 
-
     public Optional<Expanse> getExpense(Long id) {
        return expanseRepository.findById(id);
     }

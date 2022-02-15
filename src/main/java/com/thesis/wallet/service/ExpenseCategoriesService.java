@@ -17,7 +17,7 @@ import java.util.List;
 public class ExpenseCategoriesService {
     private final ExpanseCategoryRepository expanseCategoryRepository;
 
-    public List<ExpanseCategory> getAllExpenseCategories(){
-        return expanseCategoryRepository.findAll();
+    public List<ExpanseCategory> getAllExpenseCategories(String username){
+        return expanseCategoryRepository.findAllUserExpenseCategories(username);
     }
 }
