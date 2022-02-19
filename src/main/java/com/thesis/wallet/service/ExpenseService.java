@@ -26,4 +26,9 @@ public class ExpenseService {
     public Optional<Expanse> getExpense(Long id) {
        return expanseRepository.findById(id);
     }
+
+    public String deleteByIdAndUsername(Long id, String username){
+        expanseRepository.deleteByIdAndUsername(id, username);
+        return "Resource deleted from the server";
+    }
 }
