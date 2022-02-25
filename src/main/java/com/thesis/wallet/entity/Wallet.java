@@ -30,6 +30,9 @@ public class Wallet {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "icon")
+    private String icon;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
     private Set<Expanse> expanses;

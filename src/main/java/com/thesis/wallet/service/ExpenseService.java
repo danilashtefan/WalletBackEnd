@@ -29,6 +29,6 @@ public class ExpenseService {
 
     public String deleteByIdAndUsername(Long id, String username){
         expanseRepository.deleteByIdAndUsername(id, username);
-        return "Resource deleted from the server";
+        return "Process of delition from the server started...";
     }
 }

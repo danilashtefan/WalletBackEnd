@@ -75,7 +75,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         //We return the internal spring user generated from the user data from our database
         user.getRoles().forEach(
                 role -> {authorities.add(new SimpleGrantedAuthority(role.getName()));
-
+                
                 });
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
