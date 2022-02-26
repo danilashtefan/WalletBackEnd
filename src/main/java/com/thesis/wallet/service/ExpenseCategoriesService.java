@@ -20,4 +20,11 @@ public class ExpenseCategoriesService {
     public List<ExpanseCategory> getAllExpenseCategories(String username){
         return expanseCategoryRepository.findAllUserExpenseCategories(username);
     }
+
+    public String editByIdAndUsername(Long id, ExpanseCategory category, String username){
+        expanseCategoryRepository.editByIdAndUsername(id, category.getExpanseCategoryName(), category.getIcon(), category.getType() , username);
+        return "Process of editing the category on the server started...";
+    }
+
+
 }
