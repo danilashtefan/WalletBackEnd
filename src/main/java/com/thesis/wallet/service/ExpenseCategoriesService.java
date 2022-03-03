@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +25,10 @@ public class ExpenseCategoriesService {
     public String editByIdAndUsername(Long id, ExpanseCategory category, String username){
         expanseCategoryRepository.editByIdAndUsername(id, category.getExpanseCategoryName(), category.getIcon(), category.getType() , username);
         return "Process of editing the category on the server started...";
+    }
+
+    public List<Expanse> getCategoryFilteredExpenses(String username, Long id){
+        return expanseCategoryRepository.findAllCategoriesExpenses(username, id);
     }
 
 

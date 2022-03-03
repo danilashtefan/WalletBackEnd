@@ -1,10 +1,8 @@
 package com.thesis.wallet.controllers;
 
 
-import com.thesis.wallet.entity.Expanse;
-import com.thesis.wallet.entity.ExpanseCategory;
+
 import com.thesis.wallet.entity.Wallet;
-import com.thesis.wallet.service.ExpenseService;
 import com.thesis.wallet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
