@@ -22,4 +22,7 @@ public interface WalletRepository extends JpaRepository<Wallet,Long> {
     @Query("update Wallet set walletName = ?#{[1]}, icon = ?#{[2]}, currency = ?#{[3]}" +
             " where  id= ?#{[0]} and username = ?#{[4]}")
     void editByIdAndUsername(Long id, String name, String icon, String type, String username);
+
+    @Query("select expanses from ExpanseCategory e where e.username = ?#{[0]} and e.id = ?#{[1]}")
+    List<Expanse> findAllWalletsExpenses(String username, Long id);
 }

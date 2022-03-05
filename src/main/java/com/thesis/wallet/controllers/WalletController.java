@@ -2,6 +2,7 @@ package com.thesis.wallet.controllers;
 
 
 
+import com.thesis.wallet.entity.Expanse;
 import com.thesis.wallet.entity.Wallet;
 import com.thesis.wallet.service.WalletService;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,15 @@ public class WalletController {
         return ResponseEntity.ok().body(walletService.getWallet(id));
     }
 
+    @GetMapping("/wallets2/{id}/expenses")
+    public ResponseEntity<List<Expanse>> getWalletFilteredExpenses(Authentication authentication, @PathVariable Long id) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(walletService.getWalletFilteredExpenses(username ,id));
+    }
+
     @PatchMapping("wallets2/{id}")
     public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody Wallet wallet, Authentication authentication){
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.editByIdAndUsername(id, wallet, username));
-
     }
 }

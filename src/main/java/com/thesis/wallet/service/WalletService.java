@@ -35,4 +35,8 @@ public class WalletService {
         walletRepository.editByIdAndUsername(id, wallet.getWalletName(), wallet.getIcon(), wallet.getCurrency() , username);
         return "Process of editing the wallet on the server started...";
     }
+
+    public List<Expanse> getWalletFilteredExpenses(String username, Long id){
+        return walletRepository.findAllWalletsExpenses(username, id);
+    }
 }
