@@ -33,7 +33,7 @@ public class SpringBootWalletApplication {
 //			userService.saveUser(new User(null, "John Test", "john", "1234", new ArrayList<>()));
 //			userService.saveUser(new User(null, "Jack Test", "jack", "1234", new ArrayList<>()));
 //
-//			userService.addRoleToUser("john", );
+//			userService.addRoleToUser("john", "ROLE_USER" );
 //
 //			userService.addRoleToUser("jack", "ROLE_MANAGER" );
 //
