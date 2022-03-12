@@ -31,5 +31,10 @@ public class ExpenseCategoriesService {
         return expanseCategoryRepository.findAllCategoriesExpenses(username, id);
     }
 
+    public String deleteByIdAndUsername(Long id, String username){
+        expanseCategoryRepository.deleteByIdAndUsername(id, username);
+        return "Process of delition from the server started...";
+    }
+
 
 }

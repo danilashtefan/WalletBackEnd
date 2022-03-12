@@ -24,6 +24,11 @@ public interface ExpanseCategoryRepository extends JpaRepository<ExpanseCategory
             " where  id= ?#{[0]} and username = ?#{[4]}")
     void editByIdAndUsername(Long id, String name, String icon, String type, String username);
 
+    @Transactional
+    @Modifying
+    @Query("delete from ExpanseCategory e where e.id = ?#{[0]} and e.username = ?#{[1]}")
+    void deleteByIdAndUsername(Long id, String username);
+
     @Query("select expanses from ExpanseCategory e where e.username = ?#{[0]} and e.id = ?#{[1]}")
     List<Expanse> findAllCategoriesExpenses(String username, Long id);
 }

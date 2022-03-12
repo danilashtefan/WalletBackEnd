@@ -11,12 +11,15 @@ import com.thesis.wallet.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.Servlet;
@@ -47,7 +50,13 @@ public class UserController {
     @PostMapping("/user/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+        if(userService.getUser(user.getUsername()) == null){
+            User user_created = userService.saveUser(user);
+            userService.addRoleToUser(user_created.getUsername(),"ROLE_USER");
+            return ResponseEntity.created(uri).body(user_created);
+
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists!");
     }
 
     @PostMapping("/role/save")

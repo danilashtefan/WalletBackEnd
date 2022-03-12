@@ -26,6 +26,14 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories(username));
     }
 
+    @DeleteMapping("/expanseCategories2/{id}")
+    public ResponseEntity<String> deleteByIdAndUsername(@PathVariable Long id, Authentication authentication){
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseCategoryService.deleteByIdAndUsername(id, username));
+
+    }
+
+
     @GetMapping("/expanseCategories2/{id}/expenses")
     public ResponseEntity<List<Expanse>> getCategoryFilteredExpenses(Authentication authentication, @PathVariable Long id) {
         String username = (String) authentication.getPrincipal();
