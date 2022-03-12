@@ -39,4 +39,9 @@ public class WalletService {
     public List<Expanse> getWalletFilteredExpenses(String username, Long id){
         return walletRepository.findAllWalletsExpenses(username, id);
     }
+
+    public String deleteByIdAndUsername(Long id, String username){
+        walletRepository.deleteByIdAndUsername(id, username);
+        return "Process of delition from the server started...";
+    }
 }

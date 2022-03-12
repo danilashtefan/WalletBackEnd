@@ -39,6 +39,13 @@ public class WalletController {
         return ResponseEntity.ok().body(walletService.getWalletFilteredExpenses(username ,id));
     }
 
+    @DeleteMapping("wallets2/{id}")
+    public ResponseEntity<String> deleteByIdAndUsername(@PathVariable Long id, Authentication authentication){
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(walletService.deleteByIdAndUsername(id, username));
+
+    }
+
     @PatchMapping("wallets2/{id}")
     public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody Wallet wallet, Authentication authentication){
         String username = (String) authentication.getPrincipal();
