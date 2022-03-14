@@ -36,7 +36,6 @@ public class ExpenseCategoriesService {
             Set<Expanse> categoryExpenses = expenseCategories.get(i).getExpanses();
             for (Expanse expense : categoryExpenses) {
                 if (expense.getType().equals("Expense")){
-
                     totalExpenses += expense.getAmount();
                 }
             }

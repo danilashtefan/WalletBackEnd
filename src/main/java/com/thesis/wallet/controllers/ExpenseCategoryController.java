@@ -56,7 +56,6 @@ public class ExpenseCategoryController {
     public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody ExpanseCategory category, Authentication authentication){
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(expenseCategoryService.editByIdAndUsername(id, category, username));
-
     }
 
 

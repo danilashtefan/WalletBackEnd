@@ -3,7 +3,9 @@ package com.thesis.wallet.controllers;
 
 
 import com.thesis.wallet.entity.Expanse;
+import com.thesis.wallet.entity.ExpenseCategoryTotalAmountWrapper;
 import com.thesis.wallet.entity.Wallet;
+import com.thesis.wallet.entity.WalletTotalAmountWrapper;
 import com.thesis.wallet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,12 @@ public class WalletController {
     public ResponseEntity<List<Expanse>> getWalletFilteredExpenses(Authentication authentication, @PathVariable Long id) {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.getWalletFilteredExpenses(username ,id));
+    }
+
+    @GetMapping("/wallets2/topExpenseWallet")
+    public ResponseEntity<WalletTotalAmountWrapper> getTopExpenseWallet(Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(walletService.getTopExpenseWallet(username));
     }
 
     @DeleteMapping("wallets2/{id}")
