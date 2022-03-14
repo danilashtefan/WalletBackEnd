@@ -37,4 +37,5 @@ public class ExpanseCategory {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Expanse> expanses;
 
+
 }

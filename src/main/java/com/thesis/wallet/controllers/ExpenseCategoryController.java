@@ -3,6 +3,7 @@ package com.thesis.wallet.controllers;
 import com.thesis.wallet.DAO.ExpanseCategoryRepository;
 import com.thesis.wallet.entity.Expanse;
 import com.thesis.wallet.entity.ExpanseCategory;
+import com.thesis.wallet.entity.ExpenseCategoryTotalAmountWrapper;
 import com.thesis.wallet.service.ExpenseCategoriesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,17 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories(username));
     }
 
+    @GetMapping("/expanseCategories2/topExpenseCategory")
+    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopExpenseCategory(Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseCategoryService.getTopExpenseCategory(username));
+    }
+
+    @GetMapping("/expanseCategories2/topIncomeCategory")
+    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopIncomeCategory(Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseCategoryService.getTopIncomeCategory(username));
+    }
     @DeleteMapping("/expanseCategories2/{id}")
     public ResponseEntity<String> deleteByIdAndUsername(@PathVariable Long id, Authentication authentication){
         String username = (String) authentication.getPrincipal();
