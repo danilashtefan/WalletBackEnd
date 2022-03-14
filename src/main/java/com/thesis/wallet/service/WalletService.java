@@ -56,6 +56,29 @@ public class WalletService {
         return new WalletTotalAmountWrapper(maxWallet, maxExpenses);
     }
 
+    public WalletTotalAmountWrapper getTopIncomeWallet(String username) {
+        List<Wallet> wallets = walletRepository.findAllUserWallets(username);
+        if (wallets.size() == 0) {
+            return new WalletTotalAmountWrapper();
+        }
+        Wallet maxWallet = wallets.get(0);
+        int maxIncome = 0;
+        for (int i = 0; i < wallets.size(); i++) {
+            int totalExpenses = 0;
+            Set<Expanse> walletExpenses = wallets.get(i).getExpanses();
+            for (Expanse expense : walletExpenses) {
+                if (expense.getType().equals("Income")) {
+                    totalExpenses += expense.getAmount();
+                }
+            }
+            if (totalExpenses > maxIncome) {
+                maxWallet = wallets.get(i);
+                maxIncome = totalExpenses;
+            }
+        }
+        return new WalletTotalAmountWrapper(maxWallet, maxIncome);
+    }
+
     public List<Expanse> getWalletFilteredExpenses(String username, Long id) {
         return walletRepository.findAllWalletsExpenses(username, id);
     }

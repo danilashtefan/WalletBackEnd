@@ -47,6 +47,12 @@ public class WalletController {
         return ResponseEntity.ok().body(walletService.getTopExpenseWallet(username));
     }
 
+    @GetMapping("/wallets2/topIncomeWallet")
+    public ResponseEntity<WalletTotalAmountWrapper> getTopIncomeWallet(Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(walletService.getTopIncomeWallet(username));
+    }
+
     @DeleteMapping("wallets2/{id}")
     public ResponseEntity<String> deleteByIdAndUsername(@PathVariable Long id, Authentication authentication){
         String username = (String) authentication.getPrincipal();
