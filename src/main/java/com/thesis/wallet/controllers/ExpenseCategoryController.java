@@ -27,6 +27,12 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories(username));
     }
 
+    @GetMapping("/expanseCategories2/expenseCategoriesWithExpenses")
+    public ResponseEntity<List<ExpenseCategoryTotalAmountWrapper>> getExpenseCategoriesWithExpenseAmount(Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseCategoryService.getExpenseCategoriesWithAmounts(username));
+    }
+
     @GetMapping("/expanseCategories2/topExpenseCategory")
     public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopExpenseCategory(Authentication authentication) {
         String username = (String) authentication.getPrincipal();

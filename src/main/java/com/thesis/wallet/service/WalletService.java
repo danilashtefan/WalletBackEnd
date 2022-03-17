@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,6 +34,29 @@ public class WalletService {
         return "Process of editing the wallet on the server started...";
     }
 
+    public List<WalletTotalAmountWrapper> getWalletsWithAmounts(String username){
+        List<Wallet> wallets = walletRepository.findAllUserWallets(username);
+        ArrayList<WalletTotalAmountWrapper> resultLits = new ArrayList<>();
+        if (wallets.size() == 0) {
+            return resultLits;
+        }
+        for (int i = 0; i < wallets.size(); i++) {
+            int totalExpenses = 0;
+            int totalIncomes = 0;
+            Wallet wallet = wallets.get(i);
+            Set<Expanse> walletsExpenses = wallet.getExpanses();
+            for (Expanse expense : walletsExpenses) {
+                if (expense.getType().equals("Expense")){
+                    totalExpenses += expense.getAmount();
+                }else{
+                    totalIncomes += expense.getAmount();
+                }
+            }
+            resultLits.add(new WalletTotalAmountWrapper(wallet, totalExpenses, totalIncomes));
+        }
+        return resultLits;
+    }
+
     public WalletTotalAmountWrapper getTopExpenseWallet(String username) {
         List<Wallet> wallets = walletRepository.findAllUserWallets(username);
         if (wallets.size() == 0) {
@@ -53,7 +77,7 @@ public class WalletService {
                 maxExpenses = totalExpenses;
             }
         }
-        return new WalletTotalAmountWrapper(maxWallet, maxExpenses);
+        return new WalletTotalAmountWrapper(maxWallet, maxExpenses,0);
     }
 
     public WalletTotalAmountWrapper getTopIncomeWallet(String username) {
@@ -76,7 +100,7 @@ public class WalletService {
                 maxIncome = totalExpenses;
             }
         }
-        return new WalletTotalAmountWrapper(maxWallet, maxIncome);
+        return new WalletTotalAmountWrapper(maxWallet, 0,maxIncome);
     }
 
     public List<Expanse> getWalletFilteredExpenses(String username, Long id) {

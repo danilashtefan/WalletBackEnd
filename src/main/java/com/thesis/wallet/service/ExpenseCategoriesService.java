@@ -24,6 +24,29 @@ public class ExpenseCategoriesService {
         return expanseCategoryRepository.findAllUserExpenseCategories(username);
     }
 
+    public List<ExpenseCategoryTotalAmountWrapper> getExpenseCategoriesWithAmounts(String username){
+        List<ExpanseCategory> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
+        ArrayList<ExpenseCategoryTotalAmountWrapper> resultLits = new ArrayList<ExpenseCategoryTotalAmountWrapper>();
+        if (expenseCategories.size() == 0) {
+            return resultLits;
+        }
+        for (int i = 0; i < expenseCategories.size(); i++) {
+            int totalExpenses = 0;
+            int totalIncomes = 0;
+            ExpanseCategory category = expenseCategories.get(i);
+            Set<Expanse> categoryExpenses = category.getExpanses();
+            for (Expanse expense : categoryExpenses) {
+                if (expense.getType().equals("Expense")){
+                    totalExpenses += expense.getAmount();
+                }else{
+                    totalIncomes += expense.getAmount();
+                }
+            }
+            resultLits.add(new ExpenseCategoryTotalAmountWrapper(category, totalExpenses, totalIncomes));
+        }
+        return resultLits;
+    }
+
     public ExpenseCategoryTotalAmountWrapper getTopExpenseCategory(String username) {
         List<ExpanseCategory> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
         if (expenseCategories.size() == 0) {
@@ -44,7 +67,7 @@ public class ExpenseCategoriesService {
                 maxExpenses = totalExpenses;
             }
         }
-        return new ExpenseCategoryTotalAmountWrapper(maxExpenseCategory, maxExpenses);
+        return new ExpenseCategoryTotalAmountWrapper(maxExpenseCategory, maxExpenses, 0);
     }
 
     public ExpenseCategoryTotalAmountWrapper getTopIncomeCategory(String username) {
@@ -68,7 +91,7 @@ public class ExpenseCategoriesService {
                 maxExpenses = totalExpenses;
             }
         }
-        return new ExpenseCategoryTotalAmountWrapper(maxExpenseCategory, maxExpenses);
+        return new ExpenseCategoryTotalAmountWrapper(maxExpenseCategory, 0 ,maxExpenses);
     }
 
     public String editByIdAndUsername(Long id, ExpanseCategory category, String username) {

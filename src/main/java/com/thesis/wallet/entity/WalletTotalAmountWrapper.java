@@ -7,11 +7,13 @@ import lombok.Setter;
 @Setter
 public class WalletTotalAmountWrapper {
     private Wallet wallet;
-    private int amount;
+    private int expenseAmount;
+    private int incomeAmount;
 
-    public WalletTotalAmountWrapper(Wallet wallet, int amount) {
+    public WalletTotalAmountWrapper(Wallet wallet, int expenseAmount, int incomeAmount) {
         this.wallet = wallet;
-        this.amount = amount;
+        this.expenseAmount = expenseAmount;
+        this.incomeAmount = incomeAmount;
     }
 
     public WalletTotalAmountWrapper() {

@@ -7,11 +7,13 @@ import lombok.Setter;
 @Setter
 public class ExpenseCategoryTotalAmountWrapper {
     private ExpanseCategory category;
-    private int amount;
+    private int expenseAmount;
+    private int incomeAmount;
 
-    public ExpenseCategoryTotalAmountWrapper(ExpanseCategory category, int amount) {
+    public ExpenseCategoryTotalAmountWrapper(ExpanseCategory category, int expenseAmount, int incomeAmount) {
         this.category = category;
-        this.amount = amount;
+        this.expenseAmount = expenseAmount;
+        this.incomeAmount = incomeAmount;
     }
 
     public ExpenseCategoryTotalAmountWrapper() {
