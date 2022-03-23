@@ -28,20 +28,20 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories(username));
     }
 
-    @GetMapping("/expanseCategories2/expenseCategoriesWithExpenses/{minDate}/{maxDate}")
-    public ResponseEntity<List<ExpenseCategoryTotalAmountWrapper>> getExpenseCategoriesWithExpenseAmount(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
+    @GetMapping("/expanseCategories2/expenseCategoriesWithExpenses")
+    public ResponseEntity<List<ExpenseCategoryTotalAmountWrapper>> getExpenseCategoriesWithExpenseAmount(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(expenseCategoryService.getExpenseCategoriesWithAmounts(username, minDate, maxDate));
     }
 
-    @GetMapping("/expanseCategories2/topExpenseCategory/{minDate}/{maxDate}")
-    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopExpenseCategory(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
+    @GetMapping("/expanseCategories2/topExpenseCategory")
+    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopExpenseCategory(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(expenseCategoryService.getTopExpenseCategory(username, minDate, maxDate));
     }
 
-    @GetMapping("/expanseCategories2/topIncomeCategory/{minDate}/{maxDate}")
-    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopIncomeCategory(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
+    @GetMapping("/expanseCategories2/topIncomeCategory")
+    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopIncomeCategory(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(expenseCategoryService.getTopIncomeCategory(username, minDate, maxDate));
     }

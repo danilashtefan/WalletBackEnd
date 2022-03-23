@@ -41,20 +41,20 @@ public class WalletController {
         return ResponseEntity.ok().body(walletService.getWalletFilteredExpenses(username, id));
     }
 
-    @GetMapping("/wallets2/topExpenseWallet/{minDate}/{maxDate}")
-    public ResponseEntity<WalletTotalAmountWrapper> getTopExpenseWallet(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
+    @GetMapping("/wallets2/topExpenseWallet")
+    public ResponseEntity<WalletTotalAmountWrapper> getTopExpenseWallet(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.getTopExpenseWallet(username, minDate, maxDate));
     }
 
-    @GetMapping("/wallets2/topIncomeWallet/{minDate}/{maxDate}")
-    public ResponseEntity<WalletTotalAmountWrapper> getTopIncomeWallet(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
+    @GetMapping("/wallets2/topIncomeWallet")
+    public ResponseEntity<WalletTotalAmountWrapper> getTopIncomeWallet(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.getTopIncomeWallet(username, minDate, maxDate));
     }
 
-    @GetMapping("/wallets2/walletsWithExpenses/{minDate}/{maxDate}")
-    public ResponseEntity<List<WalletTotalAmountWrapper>> getWalletsWithExpenseAmount(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
+    @GetMapping("/wallets2/walletsWithExpenses")
+    public ResponseEntity<List<WalletTotalAmountWrapper>> getWalletsWithExpenseAmount(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.getWalletsWithAmounts(username, minDate, maxDate));
     }
