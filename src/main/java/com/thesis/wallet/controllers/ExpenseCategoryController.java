@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -27,25 +28,26 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok().body(expenseCategoryService.getAllExpenseCategories(username));
     }
 
-    @GetMapping("/expanseCategories2/expenseCategoriesWithExpenses")
-    public ResponseEntity<List<ExpenseCategoryTotalAmountWrapper>> getExpenseCategoriesWithExpenseAmount(Authentication authentication) {
+    @GetMapping("/expanseCategories2/expenseCategoriesWithExpenses/{minDate}/{maxDate}")
+    public ResponseEntity<List<ExpenseCategoryTotalAmountWrapper>> getExpenseCategoriesWithExpenseAmount(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
-        return ResponseEntity.ok().body(expenseCategoryService.getExpenseCategoriesWithAmounts(username));
+        return ResponseEntity.ok().body(expenseCategoryService.getExpenseCategoriesWithAmounts(username, minDate, maxDate));
     }
 
-    @GetMapping("/expanseCategories2/topExpenseCategory")
-    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopExpenseCategory(Authentication authentication) {
+    @GetMapping("/expanseCategories2/topExpenseCategory/{minDate}/{maxDate}")
+    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopExpenseCategory(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
-        return ResponseEntity.ok().body(expenseCategoryService.getTopExpenseCategory(username));
+        return ResponseEntity.ok().body(expenseCategoryService.getTopExpenseCategory(username, minDate, maxDate));
     }
 
-    @GetMapping("/expanseCategories2/topIncomeCategory")
-    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopIncomeCategory(Authentication authentication) {
+    @GetMapping("/expanseCategories2/topIncomeCategory/{minDate}/{maxDate}")
+    public ResponseEntity<ExpenseCategoryTotalAmountWrapper> getTopIncomeCategory(Authentication authentication, @PathVariable String minDate, @PathVariable String maxDate) throws ParseException {
         String username = (String) authentication.getPrincipal();
-        return ResponseEntity.ok().body(expenseCategoryService.getTopIncomeCategory(username));
+        return ResponseEntity.ok().body(expenseCategoryService.getTopIncomeCategory(username, minDate, maxDate));
     }
+
     @DeleteMapping("/expanseCategories2/{id}")
-    public ResponseEntity<String> deleteByIdAndUsername(@PathVariable Long id, Authentication authentication){
+    public ResponseEntity<String> deleteByIdAndUsername(@PathVariable Long id, Authentication authentication) {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(expenseCategoryService.deleteByIdAndUsername(id, username));
 
@@ -55,11 +57,11 @@ public class ExpenseCategoryController {
     @GetMapping("/expanseCategories2/{id}/expenses")
     public ResponseEntity<List<Expanse>> getCategoryFilteredExpenses(Authentication authentication, @PathVariable Long id) {
         String username = (String) authentication.getPrincipal();
-        return ResponseEntity.ok().body(expenseCategoryService.getCategoryFilteredExpenses(username ,id));
+        return ResponseEntity.ok().body(expenseCategoryService.getCategoryFilteredExpenses(username, id));
     }
 
     @PatchMapping("/expanseCategories2/{id}")
-    public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody ExpanseCategory category, Authentication authentication){
+    public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody ExpanseCategory category, Authentication authentication) {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(expenseCategoryService.editByIdAndUsername(id, category, username));
     }

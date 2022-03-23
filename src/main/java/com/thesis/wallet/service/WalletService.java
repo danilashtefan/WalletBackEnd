@@ -9,10 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,10 @@ public class WalletService {
         return "Process of editing the wallet on the server started...";
     }
 
-    public List<WalletTotalAmountWrapper> getWalletsWithAmounts(String username){
+    public List<WalletTotalAmountWrapper> getWalletsWithAmounts(String username, String start, String end) throws ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                .parse(start);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
         List<Wallet> wallets = walletRepository.findAllUserWallets(username);
         ArrayList<WalletTotalAmountWrapper> resultLits = new ArrayList<>();
         if (wallets.size() == 0) {
@@ -44,11 +47,11 @@ public class WalletService {
             int totalExpenses = 0;
             int totalIncomes = 0;
             Wallet wallet = wallets.get(i);
-            Set<Expanse> walletsExpenses = wallet.getExpanses();
+            Set<Expanse> walletsExpenses = wallet.getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
             for (Expanse expense : walletsExpenses) {
-                if (expense.getType().equals("Expense")){
+                if (expense.getType().equals("Expense")) {
                     totalExpenses += expense.getAmount();
-                }else{
+                } else {
                     totalIncomes += expense.getAmount();
                 }
             }
@@ -57,7 +60,10 @@ public class WalletService {
         return resultLits;
     }
 
-    public WalletTotalAmountWrapper getTopExpenseWallet(String username) {
+    public WalletTotalAmountWrapper getTopExpenseWallet(String username, String start, String end) throws ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                .parse(start);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
         List<Wallet> wallets = walletRepository.findAllUserWallets(username);
         if (wallets.size() == 0) {
             return new WalletTotalAmountWrapper();
@@ -66,7 +72,7 @@ public class WalletService {
         int maxExpenses = 0;
         for (int i = 0; i < wallets.size(); i++) {
             int totalExpenses = 0;
-            Set<Expanse> walletExpenses = wallets.get(i).getExpanses();
+            Set<Expanse> walletExpenses = wallets.get(i).getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
             for (Expanse expense : walletExpenses) {
                 if (expense.getType().equals("Expense")) {
                     totalExpenses += expense.getAmount();
@@ -77,10 +83,13 @@ public class WalletService {
                 maxExpenses = totalExpenses;
             }
         }
-        return new WalletTotalAmountWrapper(maxWallet, maxExpenses,0);
+        return new WalletTotalAmountWrapper(maxWallet, maxExpenses, 0);
     }
 
-    public WalletTotalAmountWrapper getTopIncomeWallet(String username) {
+    public WalletTotalAmountWrapper getTopIncomeWallet(String username, String start, String end) throws ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                .parse(start);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
         List<Wallet> wallets = walletRepository.findAllUserWallets(username);
         if (wallets.size() == 0) {
             return new WalletTotalAmountWrapper();
@@ -89,7 +98,7 @@ public class WalletService {
         int maxIncome = 0;
         for (int i = 0; i < wallets.size(); i++) {
             int totalExpenses = 0;
-            Set<Expanse> walletExpenses = wallets.get(i).getExpanses();
+            Set<Expanse> walletExpenses = wallets.get(i).getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
             for (Expanse expense : walletExpenses) {
                 if (expense.getType().equals("Income")) {
                     totalExpenses += expense.getAmount();
@@ -100,7 +109,7 @@ public class WalletService {
                 maxIncome = totalExpenses;
             }
         }
-        return new WalletTotalAmountWrapper(maxWallet, 0,maxIncome);
+        return new WalletTotalAmountWrapper(maxWallet, 0, maxIncome);
     }
 
     public List<Expanse> getWalletFilteredExpenses(String username, Long id) {
