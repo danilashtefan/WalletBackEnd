@@ -20,6 +20,7 @@ public class ExpenseAddOrEditRequest {
     private String photoUrl;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String comments;
