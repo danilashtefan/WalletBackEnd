@@ -10,12 +10,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public interface WalletRepository extends JpaRepository<Wallet,Long> {
 
     @Query("select w from Wallet w where w.username = ?#{[0]}")
     List<Wallet> findAllUserWallets(String username);
+
+    @Query("select w from Wallet w where w.username = ?#{[0]} and w.id = ?#{[1]}")
+    Wallet findWalletById(String username, Long id);
 
     @Transactional
     @Modifying(clearAutomatically = true)
@@ -30,4 +34,5 @@ public interface WalletRepository extends JpaRepository<Wallet,Long> {
 
     @Query("select expanses from Wallet e where e.username = ?#{[0]} and e.id = ?#{[1]}")
     List<Expanse> findAllWalletsExpenses(String username, Long id);
+
 }

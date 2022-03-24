@@ -31,8 +31,9 @@ public class WalletController {
     }
 
     @GetMapping("/wallets2/{id}")
-    public ResponseEntity<Optional<Wallet>> getWallet(@PathVariable Long id) {
-        return ResponseEntity.ok().body(walletService.getWallet(id));
+    public ResponseEntity<Wallet> getWallet(@PathVariable Long id, Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(walletService.getWalletById(username, id));
     }
 
     @GetMapping("/wallets2/{id}/expenses")

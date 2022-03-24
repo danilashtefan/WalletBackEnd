@@ -18,6 +18,9 @@ public interface ExpanseCategoryRepository extends JpaRepository<ExpanseCategory
     @Query("select c from ExpanseCategory c where c.username = ?#{[0]}")
     List<ExpanseCategory> findAllUserExpenseCategories(String username);
 
+    @Query("select c from ExpanseCategory c where c.username = ?#{[0]} and c.id = ?#{[1]}")
+    ExpanseCategory findCategoryById(String username, Long id);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update ExpanseCategory set expanseCategoryName =?#{[1]}, icon = ?#{[2]}, type = ?#{[3]}" +

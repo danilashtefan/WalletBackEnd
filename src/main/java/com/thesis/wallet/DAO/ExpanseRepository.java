@@ -45,7 +45,7 @@ public interface ExpanseRepository extends JpaRepository<Expanse,Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Expanse set name =?#{[1]}, amount = ?#{[2]}, type = ?#{[3]}, category_id = ?#{[4]}, wallet_id = ?#{[5]}, " +
             "date = ?#{[6]}, comments = ?#{[7]}, location = ?#{[8]}" +
-            " where  id= ?#{[0]} and username = ?#{[4]}")
+            " where  id= ?#{[0]} and username = ?#{[9]}")
     void editByIdAndUsername(Long id, String name, Integer amount, String type, Long categoryId, Long walletId, Date date, String comments, String location, String username);
 
 //    @Transactional

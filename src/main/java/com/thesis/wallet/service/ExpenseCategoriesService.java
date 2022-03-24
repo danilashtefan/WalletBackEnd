@@ -25,6 +25,10 @@ public class ExpenseCategoriesService {
         return expanseCategoryRepository.findAllUserExpenseCategories(username);
     }
 
+    public ExpanseCategory getCategoryById(String username, Long id){
+        return expanseCategoryRepository.findCategoryById(username,id);
+    }
+
     public List<ExpenseCategoryTotalAmountWrapper> getExpenseCategoriesWithAmounts(String username, String start, String end) throws ParseException {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .parse(start);

@@ -1,7 +1,6 @@
 package com.thesis.wallet.service;
 
 
-import com.thesis.wallet.DAO.ExpanseRepository;
 import com.thesis.wallet.DAO.WalletRepository;
 import com.thesis.wallet.entity.*;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +24,8 @@ public class WalletService {
         return walletRepository.findAllUserWallets(username);
     }
 
-    public Optional<Wallet> getWallet(Long id) {
-        return walletRepository.findById(id);
+    public Wallet getWalletById(String username, Long id) {
+        return walletRepository.findWalletById(username, id);
     }
 
     public String editByIdAndUsername(Long id, Wallet wallet, String username) {
