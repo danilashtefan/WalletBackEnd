@@ -41,15 +41,17 @@ public class ExpenseController {
         return ResponseEntity.ok().body(expenseService.getExpense(id, username));
     }
 
-//    @GetMapping("/expanses2/{id}/category")
-//    public ResponseEntity<Optional<ExpanseCategory>> getCategoryForExpense(@PathVariable Long id, Authentication authentication) {
-//        return ResponseEntity.ok().body(expenseService.getExpense(id));
-//    }
-//
-//    @GetMapping("/expanses2/{id}/wallet")
-//    public ResponseEntity<Optional<Wallet>> getWalletForExpense(@PathVariable Long id), Authentication authentication {
-//        return ResponseEntity.ok().body(expenseService.getExpense(id));
-//    }
+    @GetMapping("/expanses2/{id}/category")
+    public ResponseEntity<Optional<ExpanseCategory>> getCategoryForExpense(@PathVariable Long id, Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseService.getCategoryForExpense(id, username));
+    }
+
+    @GetMapping("/expanses2/{id}/wallet")
+    public ResponseEntity<Optional<Wallet>> getWalletForExpense(@PathVariable Long id, Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseService.getWalletForExpense(id, username));
+    }
 
 
 

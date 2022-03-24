@@ -2,6 +2,8 @@ package com.thesis.wallet.DAO;
 
 
 import com.thesis.wallet.entity.Expanse;
+import com.thesis.wallet.entity.ExpanseCategory;
+import com.thesis.wallet.entity.Wallet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +26,12 @@ public interface ExpanseRepository extends JpaRepository<Expanse,Long> {
 
     @Query("select e from Expanse e where e.username = ?#{[0]}")
     List<Expanse> findAllUserExpenses(String username);
+
+    @Query("select category from Expanse e where e.id = ?#{[0]} and e.username = ?#{[1]}")
+    Optional<ExpanseCategory> findExpenseCategory(Long id, String username);
+
+    @Query("select wallet from Expanse e where e.id = ?#{[0]} and e.username = ?#{[1]}")
+    Optional<Wallet> findExpenseWallet(Long id, String username);
 
     @Transactional
     @Modifying

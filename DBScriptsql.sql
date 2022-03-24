@@ -149,7 +149,7 @@ VALUES ('Test John Products', 124, 3, 4,'assets/images/products/placeholder.png'
 
 -- Select * from expanse where category_id = 1;
 -- select * from wallet.wallet
-select * from expanse_category
+select * from expanse
 
 
 

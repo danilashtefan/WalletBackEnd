@@ -2,6 +2,8 @@ package com.thesis.wallet.service;
 
 import com.thesis.wallet.DAO.ExpanseRepository;
 import com.thesis.wallet.entity.Expanse;
+import com.thesis.wallet.entity.ExpanseCategory;
+import com.thesis.wallet.entity.Wallet;
 import com.thesis.wallet.entity.security.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +29,13 @@ public class ExpenseService {
        return expanseRepository.findById(id, username);
     }
 
-//    public Optional<Expanse> addExpense(Expanse expense){
-////       return expanseRepository.addExpense(expense.getName(), expense.getAmount(),expense.getCategory().getId(), expense.getWallet().getId(), expense.getDate(), expense.getUsername());
-//    }
+    public Optional<ExpanseCategory> getCategoryForExpense(Long id, String username) {
+        return expanseRepository.findExpenseCategory(id, username);
+    }
+
+    public Optional<Wallet> getWalletForExpense(Long id, String username) {
+        return expanseRepository.findExpenseWallet(id, username);
+    }
 
     public String deleteByIdAndUsername(Long id, String username){
         expanseRepository.deleteByIdAndUsername(id, username);
