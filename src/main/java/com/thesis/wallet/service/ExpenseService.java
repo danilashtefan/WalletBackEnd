@@ -23,9 +23,13 @@ public class ExpenseService {
         return expanseRepository.findAllUserExpenses(username);
     }
 
-    public Optional<Expanse> getExpense(Long id) {
-       return expanseRepository.findById(id);
+    public Optional<Expanse> getExpense(Long id, String username) {
+       return expanseRepository.findById(id, username);
     }
+
+//    public Optional<Expanse> addExpense(Expanse expense){
+////       return expanseRepository.addExpense(expense.getName(), expense.getAmount(),expense.getCategory().getId(), expense.getWallet().getId(), expense.getDate(), expense.getUsername());
+//    }
 
     public String deleteByIdAndUsername(Long id, String username){
         expanseRepository.deleteByIdAndUsername(id, username);
