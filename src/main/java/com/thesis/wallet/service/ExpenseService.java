@@ -41,4 +41,12 @@ public class ExpenseService {
         expanseRepository.deleteByIdAndUsername(id, username);
         return "Process of delition from the server started...";
     }
+
+    public String editByIdAndUsername(Long id, Expanse expense, String username) {
+       // expanseRepository.editByIdAndUsername(id, category.getExpanseCategoryName(), category.getIcon(), category.getType(), username);
+        expanseRepository.editByIdAndUsername(id, expense.getName(), expense.getAmount(), expense.getType(), expense.getCategory().getId(), expense.getWallet().getId(), expense.getDate(), expense.getComments(), expense.getLocation(), username);
+        return "Process of editing the category on the server started...";
+    }
+
+
 }

@@ -149,7 +149,8 @@ VALUES ('Test John Products', 124, 3, 4,'assets/images/products/placeholder.png'
 
 -- Select * from expanse where category_id = 1;
 -- select * from wallet.wallet
-select * from expanse
+select * from expanse_category;
+update expanse set name = 'Water', amount = 100, category_id = 5, wallet_id = 2, photo_url = '', date = NOW(),type = 'Income' where id = 1
 
 
 

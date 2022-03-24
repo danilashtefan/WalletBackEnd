@@ -55,9 +55,10 @@ public class ExpenseController {
 
 
 
-//    @GetMapping("/expanses2")
-//    public ResponseEntity<Optional<Expanse>> addExpense(@RequestBody Expanse expense){
-//        return ResponseEntity.ok().body(expenseService.addExpense(expense));
-//    }
+    @PatchMapping("/expanses2/{id}")
+    public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody Expanse expense, Authentication authentication) {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseService.editByIdAndUsername(id, expense, username));
+    }
 
 }
