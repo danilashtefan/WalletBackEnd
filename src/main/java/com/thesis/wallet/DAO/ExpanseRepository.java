@@ -48,9 +48,15 @@ public interface ExpanseRepository extends JpaRepository<Expanse,Long> {
             " where  id= ?#{[0]} and username = ?#{[9]}")
     void editByIdAndUsername(Long id, String name, Integer amount, String type, Long categoryId, Long walletId, Date date, String comments, String location, String username);
 
+
 //    @Transactional
 //    @Modifying
-//    //@Query("INSERT INTO Expanse (name, amount, category_id, wallet_id, date, username) values (?#{[0]}, ?#{[1]}, ?#{[2]}, ?#{[3]}), ?#{[4]}, ?#{[5]})")
 //    @Query(value = "insert into Expanse (name, amount, category_id, wallet_id, date, username) values (:name, :amount, :category_id, :wallet_id, :date, :username)")
-//    Optional<Expanse> addExpense(String name, Integer amount, Long id, Long id1, Date date, String username);
+//    void addTransaction(String name, Integer amount, String type, ExpanseCategory category, Wallet wallet, Date date, String comments, String location);
+//
+//    @Transactional
+//    @Modifying
+    //@Query("INSERT INTO Expanse (name, amount, category_id, wallet_id, date, username) values (?#{[0]}, ?#{[1]}, ?#{[2]}, ?#{[3]}), ?#{[4]}, ?#{[5]})")
+    //@Query(value = "insert into Expanse (name, amount, category_id, wallet_id, date, username) values (:name, :amount, :category_id, :wallet_id, :date, :username)")
+//    Optional<Expanse> addTransaction(String name, Integer amount, Long id, Long id1, Date date, String username);
 }

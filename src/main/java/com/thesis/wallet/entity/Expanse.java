@@ -70,22 +70,22 @@ public class Expanse {
         this.wallet = wallet;
     }
 
+    public Expanse(String name, Integer amount, String photoUrl, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
+        this.name = name;
+        this.amount = amount;
+        this.photoUrl = photoUrl;
+        this.date = date;
+        this.comments = comments;
+        this.location = location;
+        this.type = type;
+        this.username = username;
+        this.category = category;
+        this.wallet = wallet;
+    }
+
     public Expanse() {
 
     }
 
 
-//    public Expanse(Long id, String name, Integer amount, String photoUrl, Date date, String comments, String location, String type, String username, String category_id, String wallet_id) {
-//        this.id = id;
-//        this.name = name;
-//        this.amount = amount;
-//        this.photoUrl = photoUrl;
-//        this.date = date;
-//        this.comments = comments;
-//        this.location = location;
-//        this.type = type;
-//        this.username = username;
-//        this.category = category;
-//        this.wallet = wallet;
-//    }
 }

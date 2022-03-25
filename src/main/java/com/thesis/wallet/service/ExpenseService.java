@@ -48,5 +48,11 @@ public class ExpenseService {
         return "Process of editing the category on the server started...";
     }
 
+    public String addTransaction(Expanse expense){
+       //expanseRepository.addTransaction(expense.getName(), expense.getAmount(), expense.getType(),expense.getCategory(), expense.getWallet(), expense.getDate(), expense.getComments(), expense.getLocation());
+        expanseRepository.saveAndFlush(expense);
+       return "";
+    }
+
 
 }

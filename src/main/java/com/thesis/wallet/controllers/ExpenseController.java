@@ -63,13 +63,20 @@ public class ExpenseController {
     @PatchMapping("/expanses2/{id}")
     public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody ExpenseAddOrEditRequest expenseRequest, Authentication authentication) {
         String username = (String) authentication.getPrincipal();
-        ExpanseCategory expanseCategory = new ExpanseCategory();
         Wallet wallet = new Wallet();
-
         Expanse expense = new Expanse(id, expenseRequest.getName(), expenseRequest.getAmount(), expenseRequest.getPhotoUrl(),
                 expenseRequest.getDate(), expenseRequest.getComments(), expenseRequest.getLocation(), expenseRequest.getType(),
                 username, expenseCategoriesService.getCategoryById(username,Long.parseLong(expenseRequest.getCategory())), walletService.getWalletById(username, Long.parseLong(expenseRequest.getWallet())));
         return ResponseEntity.ok().body(expenseService.editByIdAndUsername(id, expense, username));
+    }
+
+    @PostMapping("/expanses2")
+    public ResponseEntity<String> addTransaction(@RequestBody ExpenseAddOrEditRequest expenseRequest, Authentication authentication){
+        String username = (String) authentication.getPrincipal();
+        Expanse expense = new Expanse(expenseRequest.getName(), expenseRequest.getAmount(), expenseRequest.getPhotoUrl(),
+                expenseRequest.getDate(), expenseRequest.getComments(), expenseRequest.getLocation(), expenseRequest.getType(),
+                username, expenseCategoriesService.getCategoryById(username,Long.parseLong(expenseRequest.getCategory())), walletService.getWalletById(username, Long.parseLong(expenseRequest.getWallet())));
+        return ResponseEntity.ok().body(expenseService.addTransaction(expense));
     }
 
 }
