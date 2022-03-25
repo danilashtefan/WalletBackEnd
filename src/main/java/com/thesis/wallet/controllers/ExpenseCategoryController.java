@@ -4,6 +4,7 @@ import com.thesis.wallet.DAO.ExpanseCategoryRepository;
 import com.thesis.wallet.entity.Expanse;
 import com.thesis.wallet.entity.ExpanseCategory;
 import com.thesis.wallet.entity.ExpenseCategoryTotalAmountWrapper;
+import com.thesis.wallet.entity.requests.ExpenseAddOrEditRequest;
 import com.thesis.wallet.service.ExpenseCategoriesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,5 +67,11 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok().body(expenseCategoryService.editByIdAndUsername(id, category, username));
     }
 
+    @PostMapping("/expanseCategories2")
+    public ResponseEntity<String> addCategory(@RequestBody ExpanseCategory category, Authentication authentication){
+        String username = (String) authentication.getPrincipal();
+        category.setUsername(username);
+        return ResponseEntity.ok().body(expenseCategoryService.addCategory(category));
+    }
 
 }

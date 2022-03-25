@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //http.authorizeRequests().anyRequest().permitAll(); //DELETE THIS
         http.authorizeRequests().antMatchers("/api/login/**", "/token/refresh/**", "/api/user/save/**").permitAll();
         http.authorizeRequests().antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER");
-        //jacknhttp.authorizeRequests().antMatchers(GET, "/api/expanses/**").denyAll();
+        http.authorizeRequests().antMatchers(GET, "/api/expanses/**").denyAll();
+        http.authorizeRequests().antMatchers(GET, "/api/expanseCategories/**").denyAll();
+        http.authorizeRequests().antMatchers(GET, "/api/wallets/**").denyAll();
         http.authorizeRequests().anyRequest().authenticated()/*.and().formLogin()*/;
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

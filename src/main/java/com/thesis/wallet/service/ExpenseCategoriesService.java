@@ -126,5 +126,11 @@ public class ExpenseCategoriesService {
         return "Process of delition from the server started...";
     }
 
+    public String addCategory(ExpanseCategory category){
+        expanseCategoryRepository.saveAndFlush(category);
+        return "";
+    }
+
+
 
 }

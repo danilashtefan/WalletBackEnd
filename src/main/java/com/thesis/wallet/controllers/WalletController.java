@@ -1,10 +1,7 @@
 package com.thesis.wallet.controllers;
 
 
-import com.thesis.wallet.entity.Expanse;
-import com.thesis.wallet.entity.ExpenseCategoryTotalAmountWrapper;
-import com.thesis.wallet.entity.Wallet;
-import com.thesis.wallet.entity.WalletTotalAmountWrapper;
+import com.thesis.wallet.entity.*;
 import com.thesis.wallet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,5 +68,12 @@ public class WalletController {
     public ResponseEntity<String> editByIdAndUsername(@PathVariable Long id, @RequestBody Wallet wallet, Authentication authentication) {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.editByIdAndUsername(id, wallet, username));
+    }
+
+    @PostMapping("/wallets2")
+    public ResponseEntity<String> addCWallet(@RequestBody Wallet wallet, Authentication authentication){
+        String username = (String) authentication.getPrincipal();
+        wallet.setUsername(username);
+        return ResponseEntity.ok().body(walletService.addWallet(wallet));
     }
 }

@@ -119,4 +119,9 @@ public class WalletService {
         walletRepository.deleteByIdAndUsername(id, username);
         return "Process of delition from the server started...";
     }
+
+    public String addWallet(Wallet wallet){
+        walletRepository.saveAndFlush(wallet);
+        return "";
+    }
 }
