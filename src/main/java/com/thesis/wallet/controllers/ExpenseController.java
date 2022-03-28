@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +78,17 @@ public class ExpenseController {
                 expenseRequest.getDate(), expenseRequest.getComments(), expenseRequest.getLocation(), expenseRequest.getType(),
                 username, expenseCategoriesService.getCategoryById(username,Long.parseLong(expenseRequest.getCategory())), walletService.getWalletById(username, Long.parseLong(expenseRequest.getWallet())));
         return ResponseEntity.ok().body(expenseService.addTransaction(expense));
+    }
+    @GetMapping("/expanses2/topExpenseTransaction")
+    public ResponseEntity<Expanse> getTopExpenseTransaction(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseService.getTopTransaction(username, minDate, maxDate, "Expense"));
+    }
+
+    @GetMapping("/expanses2/topIncomeTransaction")
+    public ResponseEntity<Expanse> getTopIncomeTransaction(Authentication authentication, @RequestParam("minDate") String minDate, @RequestParam("maxDate") String maxDate) throws ParseException {
+        String username = (String) authentication.getPrincipal();
+        return ResponseEntity.ok().body(expenseService.getTopTransaction(username, minDate, maxDate, "Income"));
     }
 
 }

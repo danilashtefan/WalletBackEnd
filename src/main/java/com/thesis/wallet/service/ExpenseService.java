@@ -10,7 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -51,6 +55,27 @@ public class ExpenseService {
     public String addTransaction(Expanse expense){
         expanseRepository.saveAndFlush(expense);
        return "";
+    }
+
+    public Expanse getTopTransaction(String username, String start, String end, String type) throws ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                .parse(start);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
+        List<Expanse> expenses = expanseRepository.findAllUserExpenses(username);
+        if (expenses.size() == 0) {
+            return new Expanse();
+        }
+        Expanse maxExpense = expenses.get(0);
+        int maxAmount = maxExpense.getAmount();
+        for(Expanse expense : expenses){
+            if (expense.getType().equals(type)) {
+                if(expense.getAmount() > maxAmount){
+                    maxExpense = expense;
+                    maxAmount = maxExpense.getAmount();
+                }
+            }
+        }
+        return maxExpense;
     }
 
 
