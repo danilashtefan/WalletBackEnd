@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "expanse")
+@Table(name = "transaction")
 @Getter
 @Setter
 public class Expanse {
@@ -27,9 +27,6 @@ public class Expanse {
 
     @Column(name = "amount")
     private Integer amount;
-
-    @Column(name = "photo_url")
-    private String photoUrl;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -56,11 +53,10 @@ public class Expanse {
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
 
-    public Expanse(Long id, String name, Integer amount, String photoUrl, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
+    public Expanse(Long id, String name, Integer amount, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
         this.id = id;
         this.name = name;
         this.amount = amount;
-        this.photoUrl = photoUrl;
         this.date = date;
         this.comments = comments;
         this.location = location;
@@ -70,10 +66,9 @@ public class Expanse {
         this.wallet = wallet;
     }
 
-    public Expanse(String name, Integer amount, String photoUrl, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
+    public Expanse(String name, Integer amount, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
         this.name = name;
         this.amount = amount;
-        this.photoUrl = photoUrl;
         this.date = date;
         this.comments = comments;
         this.location = location;

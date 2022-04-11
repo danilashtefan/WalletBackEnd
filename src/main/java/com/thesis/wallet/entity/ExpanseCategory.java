@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "expanse_category")
+@Table(name = "category")
 @Getter
 @Setter
 public class ExpanseCategory {

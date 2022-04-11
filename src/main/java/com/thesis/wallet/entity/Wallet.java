@@ -24,7 +24,7 @@ public class Wallet {
     private String walletName;
 
 
-    @Column(name = "currency")
+    @Column(name = "type")
     private String currency;
 
     @Column(name = "username")
