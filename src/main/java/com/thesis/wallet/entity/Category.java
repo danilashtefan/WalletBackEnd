@@ -1,9 +1,7 @@
 package com.thesis.wallet.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +12,7 @@ import java.util.Set;
 @Table(name = "category")
 @Getter
 @Setter
-public class ExpanseCategory {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +33,7 @@ public class ExpanseCategory {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Set<Expanse> expanses;
+    private Set<Expense> expenses;
 
 
 }

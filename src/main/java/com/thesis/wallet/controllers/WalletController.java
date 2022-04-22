@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class WalletController {
     }
 
     @GetMapping("/wallets2/{id}/expenses")
-    public ResponseEntity<List<Expanse>> getWalletFilteredExpenses(Authentication authentication, @PathVariable Long id) {
+    public ResponseEntity<List<Expense>> getWalletFilteredExpenses(Authentication authentication, @PathVariable Long id) {
         String username = (String) authentication.getPrincipal();
         return ResponseEntity.ok().body(walletService.getWalletFilteredExpenses(username, id));
     }

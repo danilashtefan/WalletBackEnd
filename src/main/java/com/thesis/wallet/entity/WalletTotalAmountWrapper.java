@@ -1,10 +1,12 @@
 package com.thesis.wallet.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class WalletTotalAmountWrapper {
     private Wallet wallet;
     private int expenseAmount;
@@ -16,7 +18,4 @@ public class WalletTotalAmountWrapper {
         this.incomeAmount = incomeAmount;
     }
 
-    public WalletTotalAmountWrapper() {
-
-    }
 }

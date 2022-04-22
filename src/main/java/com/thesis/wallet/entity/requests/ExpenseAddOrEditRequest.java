@@ -1,13 +1,10 @@
 package com.thesis.wallet.entity.requests;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.thesis.wallet.entity.ExpanseCategory;
-import com.thesis.wallet.entity.Wallet;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Getter

@@ -1,8 +1,8 @@
 package com.thesis.wallet.service;
 
 import com.thesis.wallet.DAO.ExpanseCategoryRepository;
-import com.thesis.wallet.entity.Expanse;
-import com.thesis.wallet.entity.ExpanseCategory;
+import com.thesis.wallet.entity.Category;
+import com.thesis.wallet.entity.Expense;
 import com.thesis.wallet.entity.ExpenseCategoryTotalAmountWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 public class ExpenseCategoriesService {
     private final ExpanseCategoryRepository expanseCategoryRepository;
 
-    public List<ExpanseCategory> getAllExpenseCategories(String username) {
+    public List<Category> getAllExpenseCategories(String username) {
         return expanseCategoryRepository.findAllUserExpenseCategories(username);
     }
 
-    public ExpanseCategory getCategoryById(String username, Long id){
+    public Category getCategoryById(String username, Long id){
         return expanseCategoryRepository.findCategoryById(username,id);
     }
 
@@ -33,7 +33,7 @@ public class ExpenseCategoriesService {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .parse(start);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
-        List<ExpanseCategory> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
+        List<Category> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
         ArrayList<ExpenseCategoryTotalAmountWrapper> resultLits = new ArrayList<ExpenseCategoryTotalAmountWrapper>();
         if (expenseCategories.size() == 0) {
             return resultLits;
@@ -41,9 +41,9 @@ public class ExpenseCategoriesService {
         for (int i = 0; i < expenseCategories.size(); i++) {
             int totalExpenses = 0;
             int totalIncomes = 0;
-            ExpanseCategory category = expenseCategories.get(i);
-            Set<Expanse> categoryExpenses = category.getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
-            for (Expanse expense : categoryExpenses) {
+            Category category = expenseCategories.get(i);
+            Set<Expense> categoryExpenses = category.getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
+            for (Expense expense : categoryExpenses) {
                 if (expense.getType().equals("Expense")) {
                     totalExpenses += expense.getAmount();
                 } else if (expense.getType().equals("Income")) {
@@ -59,17 +59,17 @@ public class ExpenseCategoriesService {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .parse(start);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
-        List<ExpanseCategory> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
+        List<Category> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
         if (expenseCategories.size() == 0) {
             return new ExpenseCategoryTotalAmountWrapper();
         }
-        ExpanseCategory maxExpenseCategory = expenseCategories.get(0);
+        Category maxExpenseCategory = expenseCategories.get(0);
         int maxExpenses = 0;
-        Set<Expanse> expenses = new HashSet<Expanse>();
+        Set<Expense> expenses = new HashSet<Expense>();
         for (int i = 0; i < expenseCategories.size(); i++) {
             int totalExpenses = 0;
-            Set<Expanse> categoryExpenses = expenseCategories.get(i).getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());;
-            for (Expanse expense : categoryExpenses) {
+            Set<Expense> categoryExpenses = expenseCategories.get(i).getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());;
+            for (Expense expense : categoryExpenses) {
                 if (expense.getType().equals("Expense")) {
                     totalExpenses += expense.getAmount();
                 }
@@ -87,17 +87,17 @@ public class ExpenseCategoriesService {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .parse(start);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
-        List<ExpanseCategory> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
+        List<Category> expenseCategories = expanseCategoryRepository.findAllUserExpenseCategories(username);
         if (expenseCategories.size() == 0) {
             return new ExpenseCategoryTotalAmountWrapper();
         }
-        ExpanseCategory maxExpenseCategory = expenseCategories.get(0);
+        Category maxExpenseCategory = expenseCategories.get(0);
         int maxExpenses = 0;
-        Set<Expanse> expenses = new HashSet<Expanse>();
+        Set<Expense> expenses = new HashSet<Expense>();
         for (int i = 0; i < expenseCategories.size(); i++) {
             int totalExpenses = 0;
-            Set<Expanse> categoryExpenses = expenseCategories.get(i).getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());;
-            for (Expanse expense : categoryExpenses) {
+            Set<Expense> categoryExpenses = expenseCategories.get(i).getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());;
+            for (Expense expense : categoryExpenses) {
                 if (expense.getType().equals("Income")) {
 
                     totalExpenses += expense.getAmount();
@@ -112,12 +112,12 @@ public class ExpenseCategoriesService {
         return new ExpenseCategoryTotalAmountWrapper(maxExpenseCategory, 0, maxExpenses, expenses);
     }
 
-    public String editByIdAndUsername(Long id, ExpanseCategory category, String username) {
+    public String editByIdAndUsername(Long id, Category category, String username) {
         expanseCategoryRepository.editByIdAndUsername(id, category.getExpanseCategoryName(), category.getIcon(), category.getType(), username);
         return "Process of editing the category on the server started...";
     }
 
-    public List<Expanse> getCategoryFilteredExpenses(String username, Long id) {
+    public List<Expense> getCategoryFilteredExpenses(String username, Long id) {
         return expanseCategoryRepository.findAllCategoriesExpenses(username, id);
     }
 
@@ -126,7 +126,7 @@ public class ExpenseCategoriesService {
         return "Process of delition from the server started...";
     }
 
-    public String addCategory(ExpanseCategory category){
+    public String addCategory(Category category){
         expanseCategoryRepository.saveAndFlush(category);
         return "";
     }

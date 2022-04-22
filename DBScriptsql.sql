@@ -43,7 +43,7 @@ ENGINE=InnoDB;
 
 
 -- -----------------------------------------------------
--- Expanse Category
+-- Expense Category
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `wallet`.`category` (
@@ -78,7 +78,7 @@ ENGINE=InnoDB
 AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
--- Table Expanse
+-- Table Expense
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `wallet`.`transaction` (

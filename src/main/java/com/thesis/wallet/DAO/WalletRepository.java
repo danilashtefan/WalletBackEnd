@@ -1,7 +1,7 @@
 package com.thesis.wallet.DAO;
 
 
-import com.thesis.wallet.entity.Expanse;
+import com.thesis.wallet.entity.Expense;
 import com.thesis.wallet.entity.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public interface WalletRepository extends JpaRepository<Wallet,Long> {
@@ -32,7 +31,7 @@ public interface WalletRepository extends JpaRepository<Wallet,Long> {
     @Query("delete from Wallet e where e.id = ?#{[0]} and e.username = ?#{[1]}")
     void deleteByIdAndUsername(Long id, String username);
 
-    @Query("select expanses from Wallet e where e.username = ?#{[0]} and e.id = ?#{[1]}")
-    List<Expanse> findAllWalletsExpenses(String username, Long id);
+    @Query("select expenses from Wallet e where e.username = ?#{[0]} and e.id = ?#{[1]}")
+    List<Expense> findAllWalletsExpenses(String username, Long id);
 
 }

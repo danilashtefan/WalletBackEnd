@@ -1,8 +1,11 @@
 package com.thesis.wallet.config;
 
+import com.thesis.wallet.DAO.ExpanseRepository;
 import com.thesis.wallet.filter.CustomAuthenticationFilter;
 import com.thesis.wallet.filter.CustomAuthorizationFilter;
+import com.thesis.wallet.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +27,8 @@ import static org.springframework.http.HttpMethod.GET;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
+
+    @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -37,13 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        //http.authorizeRequests().anyRequest().permitAll(); //DELETE THIS
-        http.authorizeRequests().antMatchers("/api/login/**", "/token/refresh/**", "/api/user/save/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/login/**", "/api/user/save/**" ,"/api/test/**").permitAll();
         http.authorizeRequests().antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(GET, "/api/expanses/**").denyAll();
         http.authorizeRequests().antMatchers(GET, "/api/expanseCategories/**").denyAll();
         http.authorizeRequests().antMatchers(GET, "/api/wallets/**").denyAll();
-        http.authorizeRequests().anyRequest().authenticated()/*.and().formLogin()*/;
+        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -46,8 +46,8 @@ public class WalletService {
             int totalExpenses = 0;
             int totalIncomes = 0;
             Wallet wallet = wallets.get(i);
-            Set<Expanse> walletsExpenses = wallet.getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
-            for (Expanse expense : walletsExpenses) {
+            Set<Expense> walletsExpenses = wallet.getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
+            for (Expense expense : walletsExpenses) {
                 if (expense.getType().equals("Expense")) {
                     totalExpenses += expense.getAmount();
                 } else {
@@ -71,8 +71,8 @@ public class WalletService {
         int maxExpenses = 0;
         for (int i = 0; i < wallets.size(); i++) {
             int totalExpenses = 0;
-            Set<Expanse> walletExpenses = wallets.get(i).getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
-            for (Expanse expense : walletExpenses) {
+            Set<Expense> walletExpenses = wallets.get(i).getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
+            for (Expense expense : walletExpenses) {
                 if (expense.getType().equals("Expense")) {
                     totalExpenses += expense.getAmount();
                 }
@@ -97,8 +97,8 @@ public class WalletService {
         int maxIncome = 0;
         for (int i = 0; i < wallets.size(); i++) {
             int totalExpenses = 0;
-            Set<Expanse> walletExpenses = wallets.get(i).getExpanses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
-            for (Expanse expense : walletExpenses) {
+            Set<Expense> walletExpenses = wallets.get(i).getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());
+            for (Expense expense : walletExpenses) {
                 if (expense.getType().equals("Income")) {
                     totalExpenses += expense.getAmount();
                 }
@@ -111,7 +111,7 @@ public class WalletService {
         return new WalletTotalAmountWrapper(maxWallet, 0, maxIncome);
     }
 
-    public List<Expanse> getWalletFilteredExpenses(String username, Long id) {
+    public List<Expense> getWalletFilteredExpenses(String username, Long id) {
         return walletRepository.findAllWalletsExpenses(username, id);
     }
 

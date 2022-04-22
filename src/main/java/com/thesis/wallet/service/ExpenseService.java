@@ -1,12 +1,12 @@
 package com.thesis.wallet.service;
 
 import com.thesis.wallet.DAO.ExpanseRepository;
-import com.thesis.wallet.entity.Expanse;
-import com.thesis.wallet.entity.ExpanseCategory;
+import com.thesis.wallet.entity.Category;
+import com.thesis.wallet.entity.Expense;
 import com.thesis.wallet.entity.Wallet;
-import com.thesis.wallet.entity.security.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,18 +23,19 @@ import java.util.stream.Collectors;
 @Transactional
 @Slf4j
 public class ExpenseService {
+
+    @Autowired
     private final ExpanseRepository expanseRepository;
 
-
-   public List<Expanse> getAllExpenses(String username){
+    public List<Expense> getAllExpenses(String username){
         return expanseRepository.findAllUserExpenses(username);
     }
 
-    public Optional<Expanse> getExpense(Long id, String username) {
+    public Optional<Expense> getExpense(Long id, String username) {
        return expanseRepository.findById(id, username);
     }
 
-    public Optional<ExpanseCategory> getCategoryForExpense(Long id, String username) {
+    public Optional<Category> getCategoryForExpense(Long id, String username) {
         return expanseRepository.findExpenseCategory(id, username);
     }
 
@@ -47,28 +48,28 @@ public class ExpenseService {
         return "Process of delition from the server started...";
     }
 
-    public String editByIdAndUsername(Long id, Expanse expense, String username) {
+    public String editByIdAndUsername(Long id, Expense expense, String username) {
        // expanseRepository.editByIdAndUsername(id, category.getExpanseCategoryName(), category.getIcon(), category.getType(), username);
         expanseRepository.editByIdAndUsername(id, expense.getName(), expense.getAmount(), expense.getType(), expense.getCategory().getId(), expense.getWallet().getId(), expense.getDate(), expense.getComments(), expense.getLocation(), username);
         return "Process of editing the category on the server started...";
     }
 
-    public String addTransaction(Expanse expense){
+    public String addTransaction(Expense expense){
         expanseRepository.saveAndFlush(expense);
        return "";
     }
 
-    public Expanse getTopTransaction(String username, String start, String end, String type) throws ParseException {
+    public Expense getTopTransaction(String username, String start, String end, String type) throws ParseException {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .parse(start);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
-        List<Expanse> expenses = expanseRepository.findAllUserExpenses(username).stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toList());;
+        List<Expense> expenses = expanseRepository.findAllUserExpenses(username).stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toList());;
         if (expenses.size() == 0) {
-            return new Expanse();
+            return new Expense();
         }
-        Expanse maxExpense = expenses.get(0);
+        Expense maxExpense = expenses.get(0);
         int maxAmount = maxExpense.getAmount();
-        for(Expanse expense : expenses){
+        for(Expense expense : expenses){
             if (expense.getType().equals(type)) {
                 if(expense.getAmount() > maxAmount){
                     maxExpense = expense;

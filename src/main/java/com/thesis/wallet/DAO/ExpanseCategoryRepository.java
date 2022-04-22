@@ -1,37 +1,36 @@
 package com.thesis.wallet.DAO;
 
-import com.thesis.wallet.entity.Expanse;
-import com.thesis.wallet.entity.ExpanseCategory;
+import com.thesis.wallet.entity.Expense;
+import com.thesis.wallet.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public interface ExpanseCategoryRepository extends JpaRepository<ExpanseCategory,Long> {
-    List<ExpanseCategory> findAll();
+public interface ExpanseCategoryRepository extends JpaRepository<Category,Long> {
+    List<Category> findAll();
 
-    @Query("select c from ExpanseCategory c where c.username = ?#{[0]}")
-    List<ExpanseCategory> findAllUserExpenseCategories(String username);
+    @Query("select c from Category c where c.username = ?#{[0]}")
+    List<Category> findAllUserExpenseCategories(String username);
 
-    @Query("select c from ExpanseCategory c where c.username = ?#{[0]} and c.id = ?#{[1]}")
-    ExpanseCategory findCategoryById(String username, Long id);
+    @Query("select c from Category c where c.username = ?#{[0]} and c.id = ?#{[1]}")
+    Category findCategoryById(String username, Long id);
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("update ExpanseCategory set expanseCategoryName =?#{[1]}, icon = ?#{[2]}, type = ?#{[3]}" +
+    @Query("update Category set expanseCategoryName =?#{[1]}, icon = ?#{[2]}, type = ?#{[3]}" +
             " where  id= ?#{[0]} and username = ?#{[4]}")
     void editByIdAndUsername(Long id, String name, String icon, String type, String username);
 
     @Transactional
     @Modifying
-    @Query("delete from ExpanseCategory e where e.id = ?#{[0]} and e.username = ?#{[1]}")
+    @Query("delete from Category e where e.id = ?#{[0]} and e.username = ?#{[1]}")
     void deleteByIdAndUsername(Long id, String username);
 
-    @Query("select expanses from ExpanseCategory e where e.username = ?#{[0]} and e.id = ?#{[1]}")
-    List<Expanse> findAllCategoriesExpenses(String username, Long id);
+    @Query("select expenses from Category e where e.username = ?#{[0]} and e.id = ?#{[1]}")
+    List<Expense> findAllCategoriesExpenses(String username, Long id);
 }

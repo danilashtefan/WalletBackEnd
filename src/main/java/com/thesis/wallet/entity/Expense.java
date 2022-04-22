@@ -1,12 +1,8 @@
 package com.thesis.wallet.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,7 +12,7 @@ import java.util.Date;
 @Table(name = "transaction")
 @Getter
 @Setter
-public class Expanse {
+public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -47,13 +43,13 @@ public class Expanse {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private ExpanseCategory category;
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
 
-    public Expanse(Long id, String name, Integer amount, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
+    public Expense(Long id, String name, Integer amount, Date date, String comments, String location, String type, String username, Category category, Wallet wallet) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -66,7 +62,7 @@ public class Expanse {
         this.wallet = wallet;
     }
 
-    public Expanse(String name, Integer amount, Date date, String comments, String location, String type, String username, ExpanseCategory category, Wallet wallet) {
+    public Expense(String name, Integer amount, Date date, String comments, String location, String type, String username, Category category, Wallet wallet) {
         this.name = name;
         this.amount = amount;
         this.date = date;
@@ -78,7 +74,7 @@ public class Expanse {
         this.wallet = wallet;
     }
 
-    public Expanse() {
+    public Expense() {
 
     }
 
