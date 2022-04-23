@@ -63,7 +63,7 @@ public class ExpenseService {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 .parse(start);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(end);
-        List<Expense> expenses = expanseRepository.findAllUserExpenses(username).stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toList());;
+        List<Expense> expenses = expanseRepository.findAllUserExpenses(username).stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).filter(e -> e.getType().equals(type)).collect(Collectors.toList());
         if (expenses.size() == 0) {
             return new Expense();
         }
