@@ -99,7 +99,6 @@ public class ExpenseCategoriesService {
             Set<Expense> categoryExpenses = expenseCategories.get(i).getExpenses().stream().filter(e -> e.getDate().after(startDate)).filter(e -> e.getDate().before(endDate)).collect(Collectors.toSet());;
             for (Expense expense : categoryExpenses) {
                 if (expense.getType().equals("Income")) {
-
                     totalExpenses += expense.getAmount();
                 }
             }
