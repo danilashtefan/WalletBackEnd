@@ -1,10 +1,11 @@
 package com.thesis.wallet.tests;
 
-import com.thesis.wallet.DAO.ExpanseCategoryRepository;
+import com.thesis.wallet.DAO.WalletRepository;
 import com.thesis.wallet.entity.Category;
 import com.thesis.wallet.entity.Expense;
 import com.thesis.wallet.entity.Wallet;
 import com.thesis.wallet.service.ExpenseCategoriesService;
+import com.thesis.wallet.service.WalletService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,49 +24,49 @@ import java.util.Set;
 @RunWith(MockitoJUnitRunner.class)
 public class WalletServiceTest {
     @Mock
-    ExpanseCategoryRepository expenseCategoriesRepo;
+    WalletRepository walletRepository;
     @Mock
-    Category category1;
+    Wallet wallet1;
     @Mock
-    Category category2;
+    Wallet wallet2;
     @Mock
-    Category category3;
+    Wallet wallet3;
     @Mock
-    Wallet wallet;
+    Category category;
 
-    ExpenseCategoriesService expenseCategoriesService;
+    WalletService walletService;
     @Before
     public void setUp() {
-        expenseCategoriesService = new ExpenseCategoriesService(expenseCategoriesRepo);
+        walletService = new WalletService(walletRepository);
     }
 
     @Test
-    public void getTopExpenseCategory() throws ParseException {
+    public void getTopExpenseWallet() throws ParseException {
         Expense ex1 = new Expense("", 1, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Expense", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Expense", "", category, wallet1);
         Expense ex2 = new Expense("", 2, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Expense", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Expense", "", category, wallet1);
         Expense ex3 = new Expense("", 30, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Expense", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Expense", "", category, wallet2);
         Expense ex4 = new Expense("", 31, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Expense", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Expense", "", category, wallet2);
         Expense ex5 = new Expense("", 999, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Expense", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Expense", "", category, wallet3);
         Expense ex6 = new Expense("", 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Expense", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Expense", "", category, wallet3);
 
         Expense in7 = new Expense("", 1, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Income", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Income", "", category, wallet1);
         Expense in8 = new Expense("", 2, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Income", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Income", "", category, wallet1);
         Expense in9 = new Expense("", 30, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Income", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Income", "", category, wallet2);
         Expense in10 = new Expense("", 31, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Income", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Income", "", category, wallet2);
         Expense in11 = new Expense("", 999, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Income", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Income", "", category, wallet3);
         Expense in12 = new Expense("", 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Income", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Income", "", category, wallet3);
 
         Set setTransactions1 = new HashSet();
         setTransactions1.add(ex1);
@@ -85,51 +86,51 @@ public class WalletServiceTest {
         setTransactions3.add(in9);
         setTransactions3.add(in10);
 
-        ArrayList<Category> listOfCategories = new ArrayList<>();
+        ArrayList<Wallet> listOfWallets = new ArrayList<>();
 
-        listOfCategories.add(category1);
-        listOfCategories.add(category2);
-        listOfCategories.add(category3);
+        listOfWallets.add(wallet1);
+        listOfWallets.add(wallet2);
+        listOfWallets.add(wallet3);
 
-        Mockito.when(expenseCategoriesRepo.findAllUserExpenseCategories(Mockito.any())).thenReturn(listOfCategories);
-        Mockito.when(category1.getExpenses()).thenReturn(setTransactions1);
-        Mockito.when(category2.getExpenses()).thenReturn(setTransactions2);
-        Mockito.when(category3.getExpenses()).thenReturn(setTransactions3);
+        Mockito.when(walletRepository.findAllUserWallets(Mockito.any())).thenReturn(listOfWallets);
+        Mockito.when(wallet1.getExpenses()).thenReturn(setTransactions1);
+        Mockito.when(wallet2.getExpenses()).thenReturn(setTransactions2);
+        Mockito.when(wallet3.getExpenses()).thenReturn(setTransactions3);
 
-        Assert.assertEquals(category3, expenseCategoriesService.getTopExpenseCategory("","2022-11-02", "2022-11-11").getCategory());
-        Assert.assertEquals(category3, expenseCategoriesService.getTopExpenseCategory("","2022-11-02", "2022-11-11").getCategory());
-        Assert.assertEquals(category2, expenseCategoriesService.getTopExpenseCategory("","2022-11-02", "2022-11-06").getCategory());
-        Assert.assertEquals(category1, expenseCategoriesService.getTopExpenseCategory("","2022-11-02", "2022-11-04").getCategory());
+        Assert.assertEquals(wallet3, walletService.getTopExpenseWallet("","2022-11-02", "2022-11-11").getWallet());
+        Assert.assertEquals(wallet3, walletService.getTopExpenseWallet("","2022-11-02", "2022-11-11").getWallet());
+        Assert.assertEquals(wallet2, walletService.getTopExpenseWallet("","2022-11-02", "2022-11-06").getWallet());
+        Assert.assertEquals(wallet1, walletService.getTopExpenseWallet("","2022-11-02", "2022-11-04").getWallet());
 
     }
 
     @Test
-    public void getTopIncomeCategory() throws ParseException {
+    public void getTopIncomeWallet() throws ParseException {
         Expense in1 = new Expense("", 1, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Income", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Income", "", category, wallet1);
         Expense in2 = new Expense("", 2, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Income", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Income", "", category, wallet1);
         Expense in3 = new Expense("", 30, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Income", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Income", "", category, wallet2);
         Expense in4 = new Expense("", 31, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Income", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Income", "", category, wallet2);
         Expense in5 = new Expense("", 999, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Income", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Income", "", category, wallet3);
         Expense in6 = new Expense("", 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Income", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Income", "", category, wallet3);
 
         Expense ex7 = new Expense("", 1, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Expense", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Expense", "", category, wallet1);
         Expense ex8 = new Expense("", 2, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Expense", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Expense", "", category, wallet1);
         Expense ex9 = new Expense("", 30, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Expense", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Expense", "", category, wallet2);
         Expense ex10 = new Expense("", 31, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Expense", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Expense", "", category, wallet2);
         Expense ex11 = new Expense("", 999, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Expense", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Expense", "", category, wallet3);
         Expense ex12 = new Expense("", 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Expense", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Expense", "", category, wallet3);
 
         Set setTransactions1 = new HashSet();
         setTransactions1.add(in1);
@@ -150,53 +151,53 @@ public class WalletServiceTest {
         setTransactions3.add(ex9);
         setTransactions3.add(ex10);
 
-        ArrayList<Category> listOfCategories = new ArrayList<>();
+        ArrayList<Wallet> listOfWallets= new ArrayList<>();
 
-        listOfCategories.add(category1);
-        listOfCategories.add(category2);
-        listOfCategories.add(category3);
+        listOfWallets.add(wallet1);
+        listOfWallets.add(wallet2);
+        listOfWallets.add(wallet3);
 
-        Mockito.when(expenseCategoriesRepo.findAllUserExpenseCategories(Mockito.any())).thenReturn(listOfCategories);
-        Mockito.when(category1.getExpenses()).thenReturn(setTransactions1);
-        Mockito.when(category2.getExpenses()).thenReturn(setTransactions2);
-        Mockito.when(category3.getExpenses()).thenReturn(setTransactions3);
+        Mockito.when(walletRepository.findAllUserWallets(Mockito.any())).thenReturn(listOfWallets);
+        Mockito.when(wallet1.getExpenses()).thenReturn(setTransactions1);
+        Mockito.when(wallet2.getExpenses()).thenReturn(setTransactions2);
+        Mockito.when(wallet3.getExpenses()).thenReturn(setTransactions3);
 
-        Assert.assertEquals(category3, expenseCategoriesService.getTopIncomeCategory("","2022-11-02", "2022-11-11").getCategory());
-        Assert.assertEquals(category3, expenseCategoriesService.getTopIncomeCategory("","2022-11-02", "2022-11-11").getCategory());
-        Assert.assertEquals(category2, expenseCategoriesService.getTopIncomeCategory("","2022-11-02", "2022-11-06").getCategory());
-        Assert.assertEquals(category1, expenseCategoriesService.getTopIncomeCategory("","2022-11-02", "2022-11-04").getCategory());
+        Assert.assertEquals(wallet3, walletService.getTopIncomeWallet("","2022-11-02", "2022-11-11").getWallet());
+        Assert.assertEquals(wallet3, walletService.getTopIncomeWallet("","2022-11-02", "2022-11-11").getWallet());
+        Assert.assertEquals(wallet2, walletService.getTopIncomeWallet("","2022-11-02", "2022-11-06").getWallet());
+        Assert.assertEquals(wallet1, walletService.getTopIncomeWallet("","2022-11-02", "2022-11-04").getWallet());
 
     }
 
     @Test
-    public void getCategoriesWithAmounts() throws ParseException {
+    public void getWalletsWithAmounts() throws ParseException {
         Expense in1 = new Expense("", 1, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Income", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Income", "", category, wallet1);
         Expense in2 = new Expense("", 2, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Income", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Income", "", category, wallet1);
         Expense in3 = new Expense("", 30, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Income", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Income", "", category, wallet2);
         Expense in4 = new Expense("", 31, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Income", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Income", "", category, wallet2);
         Expense in5 = new Expense("", 999, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Income", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Income", "", category, wallet3);
         Expense in6 = new Expense("", 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Income", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Income", "", category, wallet3);
 
         Expense ex7 = new Expense("", 1, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Expense", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Expense", "", category, wallet1);
         Expense ex8 = new Expense("", 2, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-03"), "", "", "Expense", "", category1, wallet);
+                        .parse("2022-11-03"), "", "", "Expense", "", category, wallet1);
         Expense ex9 = new Expense("", 30, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Expense", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Expense", "", category, wallet2);
         Expense ex10 = new Expense("", 31, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-05"), "", "", "Expense", "", category2, wallet);
+                        .parse("2022-11-05"), "", "", "Expense", "", category, wallet2);
         Expense ex11 = new Expense("", 999, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Expense", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Expense", "", category, wallet3);
         Expense ex12 = new Expense("", 1000, new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .parse("2022-11-10"), "", "", "Expense", "", category3, wallet);
+                        .parse("2022-11-10"), "", "", "Expense", "", category, wallet3);
 
-        ArrayList<Category> listOfCategories = new ArrayList<>();
+        ArrayList<Wallet> listOfWallets = new ArrayList<>();
 
         Set setTransactions1 = new HashSet();
         setTransactions1.add(in1);
@@ -217,25 +218,25 @@ public class WalletServiceTest {
         setTransactions3.add(ex9);
         setTransactions3.add(ex10);
 
-        listOfCategories.add(category1);
-        listOfCategories.add(category2);
-        listOfCategories.add(category3);
+        listOfWallets.add(wallet1);
+        listOfWallets.add(wallet2);
+        listOfWallets.add(wallet3);
 
-        Mockito.when(expenseCategoriesRepo.findAllUserExpenseCategories(Mockito.any())).thenReturn(listOfCategories);
-        Mockito.when(category1.getExpenses()).thenReturn(setTransactions1);
-        Mockito.when(category2.getExpenses()).thenReturn(setTransactions2);
-        Mockito.when(category3.getExpenses()).thenReturn(setTransactions3);
+        Mockito.when(walletRepository.findAllUserWallets(Mockito.any())).thenReturn(listOfWallets);
+        Mockito.when(wallet1.getExpenses()).thenReturn(setTransactions1);
+        Mockito.when(wallet2.getExpenses()).thenReturn(setTransactions2);
+        Mockito.when(wallet3.getExpenses()).thenReturn(setTransactions3);
 
-        Assert.assertEquals(3, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").size());
+        Assert.assertEquals(3, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").size());
 
-        Assert.assertEquals(1999, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").get(0).getExpenseAmount());
-        Assert.assertEquals(3, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").get(0).getIncomeAmount());
+        Assert.assertEquals(1999, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").get(0).getExpenseAmount());
+        Assert.assertEquals(3, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").get(0).getIncomeAmount());
 
-        Assert.assertEquals(3, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").get(1).getExpenseAmount());
-        Assert.assertEquals(61, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").get(1).getIncomeAmount());
+        Assert.assertEquals(3, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").get(1).getExpenseAmount());
+        Assert.assertEquals(61, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").get(1).getIncomeAmount());
 
-        Assert.assertEquals(61, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").get(2).getExpenseAmount());
-        Assert.assertEquals(1999, expenseCategoriesService.getExpenseCategoriesWithAmounts("","2022-11-02", "2022-11-11").get(2).getIncomeAmount());
+        Assert.assertEquals(61, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").get(2).getExpenseAmount());
+        Assert.assertEquals(1999, walletService.getWalletsWithAmounts("","2022-11-02", "2022-11-11").get(2).getIncomeAmount());
 
 
     }
