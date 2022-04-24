@@ -1,12 +1,9 @@
 package com.thesis.wallet.tests;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
-import com.thesis.wallet.entity.Expense;
-import com.thesis.wallet.tests.requestsAndResponses.AllExpenseResponse;
 import com.thesis.wallet.tests.requestsAndResponses.LoginRequest;
 import com.thesis.wallet.tests.requestsAndResponses.TokensResponse;
 import org.junit.Assert;
@@ -16,78 +13,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.GsonBuilderUtils;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ExpenseControllerTest {
+public class CategoryControllerTest {
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+
     @Autowired
     private MockMvc mvc;
 
+
+
     @Test
-    public void getAllExpensesResponse() throws Exception {
+    public void getAllCategoriesResponse() throws Exception {
         TokensResponse tokensResponse = performLogin();
-        MvcResult result = mvc.perform(get("/api/expanses2").contentType(APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + tokensResponse.getAccess_token())
+        MvcResult result = mvc.perform(get("/api/expanseCategories2").contentType(APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + tokensResponse.getAccess_token())
         ).andReturn();
         String json = result.getResponse().getContentAsString();
         Assert.assertTrue(!json.isEmpty());
-
-    }
-
-
-
-    @Test
-    public void userLoginSuccessful() throws Exception {
-        TokensResponse tokensResponse = performLogin();
-        Assert.assertTrue(!tokensResponse.getAccess_token().isEmpty());
-        Assert.assertTrue(!tokensResponse.getRefresh_token().isEmpty());
-
     }
 
     @Test
-    public void topExpenseTransactionGet() throws Exception {
+    public void getTopExpenseCategory() throws Exception {
         TokensResponse tokensResponse = performLogin();
         String minDate ="2002-11-03";
 
         String maxDate = "2023-11-05";
 
-        MvcResult result = mvc.perform(get("/api/expanses2/topExpenseTransaction").contentType(APPLICATION_JSON_UTF8)
-                .header("Authorization", "Bearer " + tokensResponse.getAccess_token())
-        .param("minDate", minDate).param("maxDate",maxDate)).andReturn();
-        String json = result.getResponse().getContentAsString();
-        Assert.assertTrue(!json.isEmpty());
-    }
-
-    @Test
-    public void topIncomeTransactionGet() throws Exception {
-        TokensResponse tokensResponse = performLogin();
-        String minDate ="2002-11-03";
-
-        String maxDate = "2023-11-05";
-
-        MvcResult result = mvc.perform(get("/api/expanses2/topIncomeTransaction").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mvc.perform(get("/api/expanseCategories2/topExpenseCategory").contentType(APPLICATION_JSON_UTF8)
                 .header("Authorization", "Bearer " + tokensResponse.getAccess_token())
                 .param("minDate", minDate).param("maxDate",maxDate)).andReturn();
         String json = result.getResponse().getContentAsString();
         Assert.assertTrue(!json.isEmpty());
     }
+
+    @Test
+    public void getTopIncomeCategory() throws Exception {
+        TokensResponse tokensResponse = performLogin();
+        String minDate ="2002-11-03";
+
+        String maxDate = "2023-11-05";
+
+        MvcResult result = mvc.perform(get("/api/expanseCategories2/topIncomeCategory").contentType(APPLICATION_JSON_UTF8)
+                .header("Authorization", "Bearer " + tokensResponse.getAccess_token())
+                .param("minDate", minDate).param("maxDate",maxDate)).andReturn();
+        String json = result.getResponse().getContentAsString();
+        Assert.assertTrue(!json.isEmpty());
+    }
+
 
     private TokensResponse performLogin() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
@@ -106,6 +88,4 @@ public class ExpenseControllerTest {
         String json = result.getResponse().getContentAsString();
         return new Gson().fromJson(json, TokensResponse.class);
     }
-
 }
-
