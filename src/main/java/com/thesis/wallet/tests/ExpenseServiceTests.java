@@ -59,7 +59,6 @@ public class ExpenseServiceTests {
         Assert.assertEquals(ex1, expenseService.getTopTransaction("", "2022-11-02", "2022-11-04", "Expense"));
 
 
-
     }
 
     @Test
