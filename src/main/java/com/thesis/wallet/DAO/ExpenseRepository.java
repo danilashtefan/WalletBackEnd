@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public interface ExpanseRepository extends JpaRepository<Expense,Long> {
+public interface ExpenseRepository extends JpaRepository<Expense,Long> {
 
     @Query("select e from Expense e where e.username = ?#{[0]}")
     List<Expense> findAllUserExpenses(String username);

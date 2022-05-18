@@ -1,7 +1,7 @@
 package com.thesis.wallet.tests;
 
 
-import com.thesis.wallet.DAO.ExpanseRepository;
+import com.thesis.wallet.DAO.ExpenseRepository;
 import com.thesis.wallet.entity.Category;
 import com.thesis.wallet.entity.Expense;
 import com.thesis.wallet.entity.Wallet;
@@ -17,14 +17,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpenseServiceTests {
 
     @Mock
-    ExpanseRepository expenseRepo;
+    ExpenseRepository expenseRepo;
     @Mock
     Category category;
     @Mock

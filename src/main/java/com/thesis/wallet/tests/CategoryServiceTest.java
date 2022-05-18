@@ -1,12 +1,10 @@
 package com.thesis.wallet.tests;
 
 import com.thesis.wallet.DAO.ExpanseCategoryRepository;
-import com.thesis.wallet.DAO.ExpanseRepository;
 import com.thesis.wallet.entity.Category;
 import com.thesis.wallet.entity.Expense;
 import com.thesis.wallet.entity.Wallet;
 import com.thesis.wallet.service.ExpenseCategoriesService;
-import com.thesis.wallet.service.ExpenseService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

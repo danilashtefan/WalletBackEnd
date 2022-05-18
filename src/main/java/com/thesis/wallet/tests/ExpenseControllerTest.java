@@ -46,8 +46,8 @@ public class ExpenseControllerTest {
         TokensResponse tokensResponse = performLogin();
         MvcResult result = mvc.perform(get("/api/expanses2").contentType(APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + tokensResponse.getAccess_token())
         ).andReturn();
-        String json = result.getResponse().getContentAsString();
-        Assert.assertTrue(!json.isEmpty());
+        String jsonResponse = result.getResponse().getContentAsString();
+        Assert.assertTrue(!jsonResponse.isEmpty());
 
     }
 
@@ -71,8 +71,8 @@ public class ExpenseControllerTest {
         MvcResult result = mvc.perform(get("/api/expanses2/topExpenseTransaction").contentType(APPLICATION_JSON_UTF8)
                 .header("Authorization", "Bearer " + tokensResponse.getAccess_token())
         .param("minDate", minDate).param("maxDate",maxDate)).andReturn();
-        String json = result.getResponse().getContentAsString();
-        Assert.assertTrue(!json.isEmpty());
+        String jsonResponse = result.getResponse().getContentAsString();
+        Assert.assertTrue(!jsonResponse.isEmpty());
     }
 
     @Test
@@ -85,8 +85,8 @@ public class ExpenseControllerTest {
         MvcResult result = mvc.perform(get("/api/expanses2/topIncomeTransaction").contentType(APPLICATION_JSON_UTF8)
                 .header("Authorization", "Bearer " + tokensResponse.getAccess_token())
                 .param("minDate", minDate).param("maxDate",maxDate)).andReturn();
-        String json = result.getResponse().getContentAsString();
-        Assert.assertTrue(!json.isEmpty());
+        String jsonResponse = result.getResponse().getContentAsString();
+        Assert.assertTrue(!jsonResponse.isEmpty());
     }
 
     private TokensResponse performLogin() throws Exception {
@@ -103,8 +103,8 @@ public class ExpenseControllerTest {
         MvcResult result = mvc.perform(post("/api/login").contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson)).andReturn();
 
-        String json = result.getResponse().getContentAsString();
-        return new Gson().fromJson(json, TokensResponse.class);
+        String jsonResponse = result.getResponse().getContentAsString();
+        return new Gson().fromJson(jsonResponse, TokensResponse.class);
     }
 
 }
